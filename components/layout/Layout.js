@@ -47,7 +47,7 @@ const Header = props => {
     <AppBar position='sticky' {...props}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <Link href='/' passHref>
+          <Link href='/' title='HYTE' passHref>
             <Box
               className={style.logo}
               component='a'
@@ -93,7 +93,7 @@ const Header = props => {
             </Menu>
           </Box>
 
-          <Link href='/' passHref>
+          <Link href='/' title='HYTE' passHref>
             <Box
               className={style.logo}
               component='a'
@@ -175,6 +175,10 @@ const Layout = ({ children }) => {
     <>
       <Head>
         <title>HYTE</title>
+        <meta
+          name='description'
+          content='Welcome to HYTE - Your Store for Custom PC Cases, PC Gaming Accessories, and more. Because Building a PC Should Be FUN'
+        />
       </Head>
       <Header className={style.header} />
       <Container component='main' className={style.main} maxWidth='xl'>

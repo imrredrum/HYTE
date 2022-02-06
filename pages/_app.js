@@ -1,9 +1,23 @@
+import { CacheProvider } from '@emotion/react'
+import { ThemeProvider } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
-import { Layout } from '../components'
+import Head from 'next/head'
+import { Layout } from '/components'
+import theme from '/src/theme'
+import getCache from '/src/getCache'
 
-function MyApp({ Component, pageProps }) {
-  return (
-    <>
+const clientSideEmotionCache = getCache()
+
+const CustomApp = ({
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps,
+}) => (
+  <CacheProvider value={emotionCache}>
+    <Head>
+      <meta name='viewport' content='initial-scale=1, width=device-width' />
+    </Head>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <style global jsx>{`
         #__next {
@@ -19,8 +33,8 @@ function MyApp({ Component, pageProps }) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </>
-  )
-}
+    </ThemeProvider>
+  </CacheProvider>
+)
 
-export default MyApp
+export default CustomApp

@@ -46,6 +46,10 @@ const Products = ({ products }) => {
     <>
       <Head>
         <title>Products List | HYTE</title>
+        <meta
+          name='description'
+          content='Browse and explore all of our accessories including custom pc cases, gaming gear, and pc accessories.'
+        />
       </Head>
       <Typography className={style.pageTitle} variant='h1' align='center'>
         Products List
