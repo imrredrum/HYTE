@@ -50,12 +50,7 @@ const Products = ({ products }) => {
       <Typography className={style.pageTitle} variant='h1' align='center'>
         Products List
       </Typography>
-      <Grid
-        container
-        spacing={{ xs: 4, sm: 2, md: 4 }}
-        pl={{ xs: 4, sm: 2, md: 4 }}
-        pr={{ xs: 4, sm: 2, md: 4 }}
-      >
+      <Grid container spacing={{ xs: 4, sm: 2, md: 4 }}>
         {products.map(p => (
           <Grid item xs={12} sm={6} md={4} key={_.get(p, 'id', 0)}>
             <ProductCard {...p} />

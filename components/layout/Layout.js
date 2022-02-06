@@ -177,7 +177,9 @@ const Layout = ({ children }) => {
         <title>HYTE</title>
       </Head>
       <Header className={style.header} />
-      <main className={style.main}>{children}</main>
+      <Container component='main' className={style.main} maxWidth='xl'>
+        {children}
+      </Container>
       <footer className={style.footer}>
         copyright © RuM. all rights reserved
       </footer>

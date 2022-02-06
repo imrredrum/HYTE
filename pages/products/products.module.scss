@@ -1,35 +1,61 @@
 @import '/styles/mixin.scss';
 
 .pageTitle {
-  font-size: 1.5em;
+  font-size: 1.5rem;
   font-weight: bold;
   text-transform: uppercase;
-  text-indent: 0.05em;
-  letter-spacing: 0.05em;
+  text-indent: 0.05rem;
+  letter-spacing: 0.05rem;
   line-height: 1.2;
   margin: 1.5rem auto;
 
   @include md {
-    font-size: 2em;
+    font-size: 2rem;
     margin: 2.5rem auto;
   }
 }
 
 .productCard {
-  .imageWrapper {
-    position: relative;
-
-    &::after {
-      content: '';
-      display: block;
-      width: 100%;
-      padding-top: 75%;
-    }
-  }
-
   h3 {
     font-size: 1.2rem;
     font-weight: 700;
     color: #333;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: calc(357px / 640px * 100%);
+  }
+}
+
+.productTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.2;
+
+  @include md {
+    font-size: 2rem;
+  }
+}
+
+.productBrief {
+  line-height: 1.4;
+
+  @include md {
+    font-size: 1rem;
+  }
+}
+
+.total {
+  font-size: 1.5rem;
+
+  @include md {
+    font-size: 2rem;
   }
 }

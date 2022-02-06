@@ -1,3 +1,4 @@
+import Breadcrumbs from './breadcrumbs'
 import Layout from './layout'
 
-export { Layout }
+export { Breadcrumbs, Layout }
