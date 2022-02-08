@@ -21,7 +21,6 @@ import { Box } from '@mui/system'
 import _ from 'lodash'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Breadcrumbs } from '/src/components'
@@ -38,8 +37,6 @@ const Product = ({ product }) => {
     specs = [],
     description = '',
   } = product
-
-  const router = useRouter()
 
   const [pick, setPick] = useState(
     _.chain(specs)
@@ -99,14 +96,10 @@ const Product = ({ product }) => {
     <>
       <Head>
         <title>{name} | HYTE</title>
-        <meta name='description' content={brief} />
-        <meta property='og:title' content={`${name} | HYTE`} />
-        <meta property='og:type' content='product' />
-        <meta
-          property='og:url'
-          content={`https://hostame_injected_from_ENV${router.asPath}`}
-        />
-        <meta property='og:image' content={cover} />
+        <meta name='description' content={brief} key='description' />
+        <meta property='og:title' content={`${name} | HYTE`} key='og:title' />
+        <meta property='og:type' content='product' key='og:type' />
+        <meta property='og:image' content={cover} key='og:image' />
       </Head>
       <Breadcrumbs
         breadcrumbs={[

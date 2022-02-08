@@ -26,7 +26,6 @@ import { useRouter } from 'next/router'
 import { Logo } from '/src/assets/svgs'
 import { AuthContext } from '/src/context'
 import { Referrer } from '/src/components'
-import { ifServer } from '/src/helper'
 import style from './Layout.module.scss'
 
 const User = () => {
@@ -230,6 +229,8 @@ const ScrollTop = ({ children, ...rest }) => {
 }
 
 const Layout = ({ children }) => {
+  const router = useRouter()
+
   return (
     <>
       <Head>
@@ -237,6 +238,14 @@ const Layout = ({ children }) => {
         <meta
           name='description'
           content='Welcome to HYTE - Your Store for Custom PC Cases, PC Gaming Accessories, and more. Because Building a PC Should Be FUN'
+          key='description'
+        />
+        <meta property='og:title' content='HYTE' key='og:title' />
+        <meta property='og:type' content='website' key='og:type' />
+        <meta
+          property='og:url'
+          content={`https://hostame_injected_from_ENV${router.asPath}`}
+          key='og:url'
         />
       </Head>
       <Header className={style.header} />

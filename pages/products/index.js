@@ -45,11 +45,18 @@ const Products = ({ products }) => {
   return (
     <>
       <Head>
-        <title>Products List | HYTE</title>
+        <title>Product List | HYTE</title>
         <meta
           name='description'
           content='Browse and explore all of our accessories including custom pc cases, gaming gear, and pc accessories.'
+          key='description'
         />
+        <meta
+          property='og:title'
+          content='Product List | HYTE'
+          key='og:title'
+        />
+        <meta property='og:type' content='product.group' key='og:type' />
       </Head>
       <Typography className={style.pageTitle} variant='h1' align='center'>
         Products List
