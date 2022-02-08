@@ -22,10 +22,12 @@ import _ from 'lodash'
 import { useContext, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Logo } from '/src/assets/svgs'
 import { AuthContext } from '/src/context'
+import { Referrer } from '/src/components'
+import { ifServer } from '/src/helper'
 import style from './Layout.module.scss'
-import { useRouter } from 'next/router'
 
 const User = () => {
   const [anchorElUser, setAnchorElUser] = useState(null)
@@ -46,7 +48,7 @@ const User = () => {
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar
-                sx={{ width: 32, height: 32, mr: 1 }}
+                sx={{ width: 32, height: 32 }}
                 alt={`${_.get(auth, ['user', 'first_name'], '')} ${_.get(
                   auth,
                   ['user', 'last_name'],
@@ -103,7 +105,7 @@ const User = () => {
     <Link
       href={{
         pathname: '/login',
-        query: { redirect: router.pathname },
+        query: { redirect: router.asPath },
       }}
       passHref
     >
@@ -247,6 +249,7 @@ const Layout = ({ children }) => {
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
+      <Referrer />
     </>
   )
 }
