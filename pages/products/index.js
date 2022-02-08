@@ -59,7 +59,7 @@ const Products = ({ products }) => {
         <meta property='og:type' content='product.group' key='og:type' />
       </Head>
       <Typography className={style.pageTitle} variant='h1' align='center'>
-        Products List
+        Product List
       </Typography>
       <Grid container spacing={{ xs: 4, sm: 2, md: 4 }}>
         {products.map(p => (

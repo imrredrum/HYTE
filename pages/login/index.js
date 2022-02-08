@@ -2,7 +2,7 @@ import { LockOutlined as LockOutlinedIcon } from '@mui/icons-material'
 import { Avatar, Box, Button, TextField, Typography } from '@mui/material'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { API_BASE } from '/config'
 import { AuthContext } from '/src/context'
 
@@ -15,7 +15,7 @@ const Login = () => {
       router.replace(_.get(router, ['query', 'redirect'], '/'))
   }, [auth, router])
 
-  const setUser = res => {
+  const setUser = res =>
     dispatch({
       type: 'UPDATE',
       value: {
@@ -28,7 +28,14 @@ const Login = () => {
         },
       },
     })
-  }
+
+  const [errorHandle, setErrorHandle] = useState({})
+
+  const setError = () =>
+    setErrorHandle({
+      error: true,
+      helperText: 'Incorrect Email & Password.',
+    })
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -43,7 +50,14 @@ const Login = () => {
         },
       }),
     })
-      .then(res => res.json())
+      .then(res => {
+        if (_.chain(res).get('status').eq(200).value()) {
+          return res.json()
+        } else if (_.chain(res).get('status').eq(401).value()) {
+          setError()
+        }
+        throw res
+      })
       // without CORS support, this will never work
       .then(res => setUser(res))
       .catch(error => console.error('Error:', error))
@@ -73,6 +87,7 @@ const Login = () => {
           id='email'
           autoComplete='email'
           autoFocus
+          {...errorHandle}
         />
         <TextField
           margin='normal'
@@ -83,6 +98,7 @@ const Login = () => {
           type='password'
           id='password'
           autoComplete='current-password'
+          {...errorHandle}
         />
         <Button
           fullWidth
