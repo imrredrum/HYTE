@@ -2,9 +2,10 @@ import { CacheProvider } from '@emotion/react'
 import { ThemeProvider } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
 import Head from 'next/head'
-import { Layout } from '/components'
-import theme from '/src/theme'
+import { Layout } from '/src/components'
+import ContextProvider from '/src/context/auth/Context'
 import getCache from '/src/getCache'
+import theme from '/src/theme'
 
 const clientSideEmotionCache = getCache()
 
@@ -30,9 +31,11 @@ const CustomApp = ({
           color: inherit;
         }
       `}</style>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ContextProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ContextProvider>
     </ThemeProvider>
   </CacheProvider>
 )

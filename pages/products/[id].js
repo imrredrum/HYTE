@@ -24,7 +24,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { Breadcrumbs } from '/components'
+import { Breadcrumbs } from '/src/components'
 import style from './products.module.scss'
 
 const Product = ({ product }) => {

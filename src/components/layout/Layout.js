@@ -18,29 +18,111 @@ import {
   KeyboardArrowUp as KeyboardArrowUpIcon,
   Menu as MenuIcon,
 } from '@mui/icons-material'
-import style from './Layout.module.scss'
-import { useState } from 'react'
+import _ from 'lodash'
+import { useContext, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Logo } from '/assets/svgs'
+import { Logo } from '/src/assets/svgs'
+import { AuthContext } from '/src/context'
+import style from './Layout.module.scss'
+import { useRouter } from 'next/router'
+
+const User = () => {
+  const [anchorElUser, setAnchorElUser] = useState(null)
+
+  const handleOpenUserMenu = e => setAnchorElUser(e.currentTarget)
+
+  const handleCloseUserMenu = () => setAnchorElUser(null)
+
+  const { auth, dispatch } = useContext(AuthContext)
+  const router = useRouter()
+
+  const logout = () => dispatch({ type: 'CLEAR' })
+
+  return _.get(auth, 'isAuthed', false) ? (
+    <>
+      <Tooltip title='User settings'>
+        <>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar
+                sx={{ width: 32, height: 32, mr: 1 }}
+                alt={`${_.get(auth, ['user', 'first_name'], '')} ${_.get(
+                  auth,
+                  ['user', 'last_name'],
+                  ''
+                )}`}
+                src={_.get(auth, ['user', 'cover'], '')}
+              />
+            </IconButton>
+          </Box>
+
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Button onClick={handleOpenUserMenu}>
+              <Avatar
+                sx={{ width: 32, height: 32, mr: 1 }}
+                alt={`${_.get(auth, ['user', 'first_name'], '')} ${_.get(
+                  auth,
+                  ['user', 'last_name'],
+                  ''
+                )}`}
+                src={_.get(auth, ['user', 'cover'], '')}
+              />
+              {_.get(auth, ['user', 'first_name'], '')}{' '}
+              {_.get(auth, ['user', 'last_name'], '')}
+            </Button>
+          </Box>
+        </>
+      </Tooltip>
+      <Menu
+        sx={{ mt: '45px' }}
+        anchorEl={anchorElUser}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(anchorElUser)}
+        onClose={handleCloseUserMenu}
+      >
+        <MenuItem
+          onClick={() => {
+            logout()
+            handleCloseUserMenu()
+          }}
+        >
+          <Typography textAlign='center'>logout</Typography>
+        </MenuItem>
+      </Menu>
+    </>
+  ) : (
+    <Link
+      href={{
+        pathname: '/login',
+        query: { redirect: router.pathname },
+      }}
+      passHref
+    >
+      <Button sx={{ display: 'block' }} component='a' className={style.button}>
+        Login
+      </Button>
+    </Link>
+  )
+}
 
 const Header = props => {
   const [anchorElNav, setAnchorElNav] = useState(null)
-  const [anchorElUser, setAnchorElUser] = useState(null)
 
-  const handleOpenNavMenu = event => {
-    setAnchorElNav(event.currentTarget)
-  }
-  const handleOpenUserMenu = event => {
-    setAnchorElUser(event.currentTarget)
+  const handleOpenNavMenu = e => {
+    setAnchorElNav(e.currentTarget)
   }
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
-  }
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
   }
 
   return (
@@ -66,7 +148,6 @@ const Header = props => {
               <MenuIcon />
             </IconButton>
             <Menu
-              id='menu-appbar'
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
@@ -117,31 +198,7 @@ const Header = props => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='' src='' />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign='center'>logout</Typography>
-              </MenuItem>
-            </Menu>
+            <User />
           </Box>
         </Toolbar>
       </Container>
@@ -184,11 +241,9 @@ const Layout = ({ children }) => {
       <Container component='main' className={style.main} maxWidth='xl'>
         {children}
       </Container>
-      <footer className={style.footer}>
-        copyright © RuM. all rights reserved
-      </footer>
+      <footer className={style.footer}>copyright © RuM. 2022</footer>
       <ScrollTop className={style.scrollTop}>
-        <Fab size='small'>
+        <Fab color='secondary' size='small'>
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>

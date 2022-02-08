@@ -5,7 +5,10 @@ const CustomImage = props => <img {...props} style={{ maxWidth: '100%' }} />
 
 const Home = () => (
   <Box>
-    <ReactMarkdown components={{ img: CustomImage }}>{`### Programming Task:
+    <ReactMarkdown
+      linkTarget='_blank'
+      components={{ img: CustomImage }}
+    >{`### Programming Task:
 
 Create a basic product listing page with React + Next.js and a login form.
 

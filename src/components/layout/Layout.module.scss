@@ -1,6 +1,6 @@
-@import '/styles/mixin.scss';
+@import '/src/styles/mixin.scss';
 
-.header {
+header.header {
   background-color: #fff;
   color: #010101;
 }
@@ -37,11 +37,6 @@
   }
 
   button {
-    background-color: #f5b433;
     color: #fff;
-
-    &:hover {
-      background-color: #dfa42e;
-    }
   }
 }
